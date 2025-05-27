@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: coupon-consume
+
+server:
+  port: 8081

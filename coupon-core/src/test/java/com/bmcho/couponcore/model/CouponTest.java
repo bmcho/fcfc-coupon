@@ -85,7 +85,7 @@ class CouponTest {
             .dateIssueStart(LocalDateTime.now().minusDays(1))
             .dateIssueEnd(LocalDateTime.now().plusDays(2))
             .build();
-        coupon.issued();
+        coupon.issue();
         assertEquals(coupon.getIssuedQuantity(),100);
     }
 
@@ -101,7 +101,7 @@ class CouponTest {
             .dateIssueEnd(LocalDateTime.now().plusDays(2))
             .build();
 
-        CouponIssueException exception1 = assertThrowsExactly(CouponIssueException.class, coupon1::issued);
+        CouponIssueException exception1 = assertThrowsExactly(CouponIssueException.class, coupon1::issue);
         assertEquals(exception1.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
 
         // 발급 시간 x
@@ -112,7 +112,7 @@ class CouponTest {
             .dateIssueEnd(LocalDateTime.now().minusDays(1))
             .build();
 
-        CouponIssueException exception2 = assertThrowsExactly(CouponIssueException.class, coupon2::issued);
+        CouponIssueException exception2 = assertThrowsExactly(CouponIssueException.class, coupon2::issue);
         assertEquals(exception2.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_DATE);
     }
 

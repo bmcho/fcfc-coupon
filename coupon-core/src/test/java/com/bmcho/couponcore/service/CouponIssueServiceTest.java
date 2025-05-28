@@ -9,13 +9,15 @@ import com.bmcho.couponcore.model.CouponType;
 import com.bmcho.couponcore.repository.mysql.CouponIssueJpaRepository;
 import com.bmcho.couponcore.repository.mysql.CouponIssueRepository;
 import com.bmcho.couponcore.repository.mysql.CouponJpaRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class CouponIssueServiceTest extends TestConfig {
 
@@ -47,8 +49,8 @@ class CouponIssueServiceTest extends TestConfig {
             .build();
         couponIssueJpaRepository.save(couponIssue);
         // when & then
-        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> sut.saveCouponIssue(couponIssue.getCouponId(), couponIssue.getUserId()));
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.DUPLICATED_COUPON_ISSUE);
+        CouponIssueException exception = assertThrows(CouponIssueException.class, () -> sut.saveCouponIssue(couponIssue.getCouponId(), couponIssue.getUserId()));
+        assertEquals(exception.getErrorCode(), ErrorCode.DUPLICATED_COUPON_ISSUE);
     }
 
     @Test
@@ -60,7 +62,7 @@ class CouponIssueServiceTest extends TestConfig {
         // when
         CouponIssue result = sut.saveCouponIssue(couponId, userId);
         // then
-        Assertions.assertTrue(couponIssueJpaRepository.findById(result.getId()).isPresent());
+        assertTrue(couponIssueJpaRepository.findById(result.getId()).isPresent());
     }
 
     @Test
@@ -81,10 +83,10 @@ class CouponIssueServiceTest extends TestConfig {
         sut.issue(coupon.getId(), userId);
         // then
         Coupon couponResult = couponJpaRepository.findById(coupon.getId()).get();
-        Assertions.assertEquals(couponResult.getIssuedQuantity(), 1);
+        assertEquals(couponResult.getIssuedQuantity(), 1);
 
         CouponIssue couponIssueResult = couponIssueRepository.findFirstCouponIssue(coupon.getId(), userId).orElse(null);
-        Assertions.assertNotNull(couponIssueResult);
+        assertNotNull(couponIssueResult);
     }
 
 
@@ -103,10 +105,10 @@ class CouponIssueServiceTest extends TestConfig {
             .build();
         couponJpaRepository.save(coupon);
         // when & then
-        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> {
+        CouponIssueException exception = assertThrows(CouponIssueException.class, () -> {
             sut.issue(coupon.getId(), userId);
         });
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
+        assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
     }
 
     @Test
@@ -124,10 +126,10 @@ class CouponIssueServiceTest extends TestConfig {
             .build();
         couponJpaRepository.save(coupon);
         // when & then
-        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> {
+        CouponIssueException exception = assertThrows(CouponIssueException.class, () -> {
             sut.issue(coupon.getId(), userId);
         });
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_DATE);
+        assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_DATE);
     }
 
     @Test
@@ -152,10 +154,10 @@ class CouponIssueServiceTest extends TestConfig {
         couponIssueJpaRepository.save(couponIssue);
 
         // when & then
-        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> {
+        CouponIssueException exception = assertThrows(CouponIssueException.class, () -> {
             sut.issue(coupon.getId(), userId);
         });
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.DUPLICATED_COUPON_ISSUE);
+        assertEquals(exception.getErrorCode(), ErrorCode.DUPLICATED_COUPON_ISSUE);
     }
 
     @Test
@@ -166,9 +168,8 @@ class CouponIssueServiceTest extends TestConfig {
         long couponId = 1;
 
         // when & then
-        CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> {
-            sut.issue(couponId, userId);
-        });
+        CouponIssueException exception = assertThrows(CouponIssueException.class, () -> sut.issue(couponId, userId));
+        assertEquals(exception.getErrorCode(), ErrorCode.COUPON_NOT_EXIST);
     }
 
 }

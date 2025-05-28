@@ -47,8 +47,10 @@ public class CouponIssueService {
     }
 
     private void checkAlreadyIssuance(long couponId, long userId) {
-        CouponIssue issue = couponIssueRepository.findFirstCouponIssue(couponId, userId)
-            .orElseThrow(() -> new CouponIssueException(ErrorCode.DUPLICATED_COUPON_ISSUE, "이미 발급된 쿠폰입니다. user_id: %d, coupon_id: %d".formatted(userId, couponId)));
+        couponIssueRepository.findFirstCouponIssue(couponId, userId)
+            .ifPresent(v -> {
+                throw new CouponIssueException(ErrorCode.DUPLICATED_COUPON_ISSUE, "이미 발급된 쿠폰입니다. user_id: %d, coupon_id: %d".formatted(userId, couponId));
+            });
     }
 
 }

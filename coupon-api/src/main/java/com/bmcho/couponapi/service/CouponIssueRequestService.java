@@ -1,6 +1,6 @@
 package com.bmcho.couponapi.service;
 
-import com.bmcho.couponapi.component.DistributeLockExecutor;
+import com.bmcho.couponcore.component.DistributeLockExecutor;
 import com.bmcho.couponapi.dto.CouponIssueRequestDto;
 import com.bmcho.couponcore.service.AsyncCouponIssueServiceV1;
 import com.bmcho.couponcore.service.CouponIssueService;

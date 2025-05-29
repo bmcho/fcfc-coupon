@@ -1,4 +1,4 @@
-package com.bmcho.couponapi.component;
+package com.bmcho.couponcore.component;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

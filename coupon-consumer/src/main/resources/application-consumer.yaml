@@ -1,9 +1,9 @@
 spring:
   application:
-    name: coupon-api
+    name: coupon-consumer
 
 server:
-  port: 8080
+  port: 8081
   tomcat:
     mbeanregistry:
       enabled: true
@@ -15,3 +15,4 @@ management:
     web:
       exposure:
         include: prometheus
+

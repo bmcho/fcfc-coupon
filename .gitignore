@@ -37,3 +37,5 @@ out/
 .vscode/
 
 /mysql
+/monitoring/grafana
+/monitoring/prometheus/volume

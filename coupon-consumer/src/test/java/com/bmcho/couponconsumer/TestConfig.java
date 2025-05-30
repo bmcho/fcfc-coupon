@@ -1,0 +1,14 @@
+package com.bmcho.couponconsumer;
+
+import com.bmcho.couponcore.CouponCoreConfiguration;
+import jakarta.transaction.Transactional;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
+
+@Transactional
+@ActiveProfiles("test")
+@TestPropertySource(properties = "spring.config.name=application-core")
+@SpringBootTest(classes = CouponCoreConfiguration.class)
+public class TestConfig {
+}
